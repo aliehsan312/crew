@@ -1,0 +1,36 @@
+research_task:
+  description: >
+    Search the web once for "{question}" using the search tool. Use at most 3 results.
+    For each, note the title from the search snippet and its URL.
+    Only the search tool is available. Never open URLs or files; rely on snippets.
+  expected_output: Max 3 bullets, one sentence each, every bullet ending with a URL.
+  agent: researcher
+
+analysis_task:
+  description: >
+    From the research, pick the 2 most important claims. Note any
+    contradiction or gap. Keep each claim's source URL. Use no tools.
+  expected_output: >
+    2 numbered one-line claims, each with a URL, plus one line on
+    contradictions or gaps. Max 50 words total.
+  agent: analyst
+  context: [research_task]
+
+fact_check_task:
+  description: >
+    Check the 2 claims by judging them against the provided sources. Never open
+    URLs or files; search snippets are enough. Mark each claim verified,
+    uncertain, or unsupported.
+  expected_output: 2 lines in the form "claim - verdict - short reason - URL".
+  agent: fact_checker
+  context: [analysis_task]
+
+report_task:
+  description: >
+    Write a short report answering "{question}" using only verified claims,
+    and caveat the uncertain ones. Drop unsupported claims. Use no tools.
+  expected_output: >
+    Markdown, max 100 words: a 2-sentence summary, up to 3 key findings
+    with caveats where needed, then a list of source URLs.
+  agent: writer
+  context: [fact_check_task]
