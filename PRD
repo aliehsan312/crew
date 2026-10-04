@@ -1,0 +1,56 @@
+# Product Requirements Document (PRD)
+
+## Product Name
+**AI Research Crew**
+
+## 1. Problem
+
+Researching a topic thoroughly requires several repetitive steps: finding relevant sources, extracting useful information, comparing claims, checking reliability, and finally turning the results into a readable report.
+
+Typical AI chat interfaces can perform these tasks, but they often depend on a single prompt and a single model response. This makes the research process less structured, less transparent, and harder to reproduce.
+
+## 2. Solution
+
+AI Research Crew is a lightweight multi-agent research application that automates the research workflow through a sequence of specialized AI agents.
+
+A user provides a research question, and the system passes it through four stages:
+
+1. **Researcher** — searches the web and collects relevant findings and source URLs.
+2. **Analyst** — identifies the most important claims, themes, contradictions, and gaps.
+3. **Fact Checker** — evaluates the claims against the available sources.
+4. **Writer** — produces a concise final report based on the verified findings.
+
+The result is a structured, source-aware research report rather than a single unstructured AI response.
+
+## 3. Approach
+
+The application uses an agentic workflow orchestrated with **CrewAI**.
+
+- **Frontend:** Streamlit
+- **Agent orchestration:** CrewAI
+- **LLM:** Groq-hosted GPT-OSS 120B
+- **Web search:** Serper
+- **Workflow:** Sequential multi-agent pipeline
+- **Deployment:** Streamlit Community Cloud with CrewAI/cloud services as the backend
+
+Each agent has a narrowly defined responsibility, and the output of one stage becomes the context for the next. This reduces the need for one model to perform the entire research process at once.
+
+## 4. Utility
+
+The application is useful for quickly producing an initial, structured research brief on a topic while preserving source links and separating research, analysis, verification, and writing.
+
+Potential use cases include:
+
+- Technical and academic topic research
+- Market and technology overviews
+- Early-stage fact gathering
+- Background research for reports and presentations
+- Rapid comparison of claims and evidence
+
+The system is intended as a **research assistance tool**, not as a replacement for primary-source verification or expert review.
+
+## 5. Core User Flow
+
+**Enter research question → Run research crew → Review sourced findings → Receive final report**
+
+The design prioritizes simplicity: the user interacts primarily with the research question and final result, while the multi-agent workflow handles the intermediate work automatically.
